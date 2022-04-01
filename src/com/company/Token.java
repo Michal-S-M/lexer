@@ -11,7 +11,7 @@ class Token
     }
     public String toString()
     {
-        return "TOKEN[тип=\"" + this.type + "\", значение=\"" + this.value + "\"]";
+        return "TOKEN[тип=\"" + this.type + "\", значение \"" + this.value + "\"]";
     }
 
 }

@@ -16,6 +16,14 @@ public class Lexer
         lexems.put("DIGIT", Pattern.compile("0|([1-9][0-9]*)"));
         lexems.put("ASSIGN_OP", Pattern.compile("="));
         lexems.put("OP", Pattern.compile("\\+|-|\\/|\\*"));
+        lexems.put("L_BRACKET", Pattern.compile("\\("));
+        lexems.put("R_BRACKET", Pattern.compile("\\)"));
+        lexems.put("L_BRACE", Pattern.compile("\\{"));
+        lexems.put("R_BRACE", Pattern.compile("\\}"));
+        lexems.put("OP_FOR", Pattern.compile("for"));
+        lexems.put("OP_WHILE", Pattern.compile("while"));
+        lexems.put("OP_DO", Pattern.compile("do"));
+        lexems.put("COMPARISON_OP", Pattern.compile("\\>|<|\\*"));
     }
 
     Lexer(String code_str) {
