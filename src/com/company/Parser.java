@@ -6,9 +6,10 @@ public class Parser {
     public LinkedList<Token> tokens = new LinkedList<Token>();
     public int len;
 
-    Parser(LinkedList<Token> tokens, int len) {
+    Parser(LinkedList<Token> tokens, int len) throws ParseExc {
         this.tokens = tokens;
         this.len = len;
+        this.lang();
     }
 
     public void lang() throws ParseExc {
@@ -16,6 +17,8 @@ public class Parser {
             expr_();
         }
     }
+
+
     public void expr_() throws ParseExc {
         Token currentToken = tokens.get(iterator);
         if (currentToken.type == "WHILE"){

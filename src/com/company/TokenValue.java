@@ -5,7 +5,7 @@ public class TokenValue {
     static Map<String,String> regexp = new HashMap<String,String>();
     public TokenValue (){
         regexp.put("WHILE OP","^[_][w][h][i][l][e][_]$");
-        regexp.put("COMPARISON_OP", "^[>|<|~|([=][=])]$");
+        regexp.put("LOGIC_OP", "^[>|<|~|([=][=])]$");
         regexp.put("L_BRACKET","^\\($");
         regexp.put("R_BRACKET","^\\)$");
         regexp.put("L_BRACE","^\\{$");
