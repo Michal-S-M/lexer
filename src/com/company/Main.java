@@ -1,16 +1,21 @@
 package com.company;
 import java.util.Scanner;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.regex.Matcher;
+import java.lang.*;
 
 public class Main {
-    public static void main(String[] args)
+    public static void main(String[] args) throws ParseExc
     {
         Scanner in = new Scanner(System.in);
         System.out.print("Введите код программы: ");
-        String code_str = in.nextLine();
+        String str = in.nextLine();
         in.close();
-        Lexer lexer = new Lexer(code_str);
+
+        Lexer lexer = new Lexer(str);
+
+        Parser parser = new Parser(lexer.tokens, lexer.len);
+        parser.lang();
+
     }
 }
+
+// _if_ ( a ) { a1 = 1 + ab + bc + 1 }

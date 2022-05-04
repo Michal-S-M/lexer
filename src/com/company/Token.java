@@ -2,8 +2,8 @@ package com.company;
 
 class Token
 {
-    private String type;
-    private String value;
+    public String type;
+    public String value;
     public Token(String type, String value)
     {
         this.type = type;
@@ -13,5 +13,6 @@ class Token
     {
         return "TOKEN[тип=\"" + this.type + "\", значение \"" + this.value + "\"]";
     }
+
 
 }
