@@ -9,7 +9,7 @@ public class Main {
         System.out.print("Введите код программы: ");
         String str = in.nextLine();
         in.close();
-
+        //str = "a = 0;";
         Lexer lexer = new Lexer(str);
 
         Parser parser = new Parser(lexer.tokens, lexer.len);
