@@ -1,5 +1,4 @@
 package com.company;
-import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.Map;
 public class Lexer {
     public ArrayList<Token> tokens = new ArrayList<Token>();
     public int len;
+    /*
     private static final Map<String, Pattern> lexemes = new HashMap<>();
     static {
         lexemes.put("VAR", Pattern.compile("^[A-Za-z][A-Za-z0-9]*\\w*$"));
@@ -28,9 +28,11 @@ public class Lexer {
         lexemes.put("DIV", Pattern.compile("^,$"));
         lexemes.put("PRINT", Pattern.compile("^PRINT$"));
     }
-
+*/
     Lexer(String str) {
-        len = str.toCharArray().length;
+        TokenValue lex = new TokenValue();
+        char[] code_str = str.toCharArray();
+        len = code_str.length;
         String tokenStart = "";
         for (int i = 0; i < str.length(); i++) {
 
@@ -38,15 +40,15 @@ public class Lexer {
                 continue;
             }
 
-            tokenStart += str.toCharArray()[i];
+            tokenStart += code_str[i];
             String tokenEnd = " ";
 
             if (i < str.length() - 1) {
-                tokenEnd = tokenStart + str.toCharArray()[i + 1];
+                tokenEnd = tokenStart + code_str[i + 1];
             }
 
-            for (String key : lexemes.keySet()) {
-                Pattern p = lexemes.get(key);
+            for (String key : lex.lexemes.keySet()) {
+                Pattern p = lex.lexemes.get(key);
                 Matcher m_1 = p.matcher(tokenStart);
                 Matcher m_2 = p.matcher(tokenEnd);
 

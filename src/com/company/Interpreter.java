@@ -1,12 +1,10 @@
 package com.company;
-
 import java.util.*;
 
 public class Interpreter {
 
     private final ArrayList<Token> infixExpr;
     private final Map<String, Double> variables = new HashMap<>();
-
     private int iterator;
     private Token cur;
     private boolean transCondition;
@@ -16,8 +14,7 @@ public class Interpreter {
         cur = infixExpr.get(0);
         iterator = 0;
         transCondition = false;
-
-        for (; iterator < infixExpr.size()-1; iterator++) {
+        for (; iterator < infixExpr.size(); iterator++) {
             cur = infixExpr.get(iterator);
             switch (cur.type) {
                 case "ASSIGN_OP" -> interpret_value("ENDL");
@@ -28,7 +25,6 @@ public class Interpreter {
                 case "PRINT" -> interpret_print();
             }
         }
-
         System.out.println(this.variables);
     }
 
@@ -47,6 +43,26 @@ public class Interpreter {
         }
         double rez = calc(toPostfix(infixExpr, startExpr, iterator));
         variables.put(infixExpr.get(indexVar).value, rez);
+    }
+
+    private void interpret_if() {
+        interpret_condition();
+        if (!transCondition) {
+            while (!"ENDL".equals(cur.type)) {
+                if ("ELSE".equals(cur.type)) {
+                    break;
+                }
+                iterator++;
+                cur = infixExpr.get(iterator);
+            }
+        } else {
+            iterator++;
+            interpret_value("ELSE");
+            while (!"ENDL".equals(cur.type)) {
+                iterator++;
+                cur = infixExpr.get(iterator);
+            }
+        }
     }
 
     private int operationPriority(Token op) {
@@ -94,26 +110,6 @@ public class Interpreter {
         cur = infixExpr.get(iterator);
 
         transCondition = compare(infixExpr.get(comparison_op_index), first, second);
-    }
-
-    private void interpret_if() {
-        interpret_condition();
-        if (!transCondition) {
-            while (!"ENDL".equals(cur.type)) {
-                if ("ELSE".equals(cur.type)) {
-                    break;
-                }
-                iterator++;
-                cur = infixExpr.get(iterator);
-            }
-        } else {
-            iterator++;
-            interpret_value("ELSE");
-            while (!"ENDL".equals(cur.type)) {
-                iterator++;
-                cur = infixExpr.get(iterator);
-            }
-        }
     }
 
     private void interpret_while() {
