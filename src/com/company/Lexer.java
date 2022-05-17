@@ -36,7 +36,7 @@ public class Lexer {
         String tokenStart = "";
         for (int i = 0; i < str.length(); i++) {
 
-            if (str.toCharArray()[i] == ' ') {
+            if (code_str[i] == ' ') {
                 continue;
             }
 

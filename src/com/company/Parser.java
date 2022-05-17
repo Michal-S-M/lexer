@@ -39,10 +39,10 @@ public class Parser {
     public void body() {
         switch (curToken.type) {
             case "VAR" -> expr_assign();
-            case "IF" -> if_op();
+            case "_if_" -> if_op();
             case "WHILE" -> while_op();
             case "DO" -> do_while_op();
-            case "FOR" -> for_op();
+            case "_for_" -> for_op();
             case "PRINT" -> print();
             default -> terminalCheck("VAR");
         }
@@ -63,14 +63,14 @@ public class Parser {
 
     public boolean body_condition() {
         return switch (curToken.type) {
-            case "VAR", "IF", "FOR", "WHILE", "DO", "PRINT" -> true;
+            case "VAR", "_if_", "_for_", "WHILE", "DO", "PRINT" -> true;
             default -> false;
         };
     }
 
     public boolean body_condition_do_while() {
         return switch (curToken.type) {
-            case "VAR", "IF", "FOR", "DO", "PRINT" -> true;
+            case "VAR", "_if_", "_for_", "DO", "PRINT" -> true;
             default -> false;
         };
     }
@@ -114,11 +114,9 @@ public class Parser {
     }
 
     public void if_op() {
-        System.out.println("Hello World 2");
-        terminalCheck("IF");
+        terminalCheck("_if_");
         condition_in_br();
         do {
-            System.out.println("Hello World 3");
             body();
         } while (body_condition());
         if ("ELSE".equals(curToken.type)) {
@@ -151,7 +149,7 @@ public class Parser {
     }
 
     public void for_op() {
-        terminalCheck("FOR");
+        terminalCheck("_for_");
         terminalCheck("L_BC");
         assign();
         terminalCheck("DIV");

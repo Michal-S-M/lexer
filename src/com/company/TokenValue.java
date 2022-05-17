@@ -13,11 +13,11 @@ public class TokenValue {
         lexemes.put("R_BC", Pattern.compile("^\\)$"));
         lexemes.put("ENDL", Pattern.compile("^;$"));
         lexemes.put("COMPARE_OP", Pattern.compile("^(~|<|>|!=)$"));
-        lexemes.put("IF", Pattern.compile("^_if_$"));
-        lexemes.put("ELSE", Pattern.compile("^_else_$"));
-        lexemes.put("WHILE", Pattern.compile("^_while_$"));
-        lexemes.put("DO", Pattern.compile("^_do_$"));
-        lexemes.put("FOR", Pattern.compile("^_for$"));
+        lexemes.put("_if_", Pattern.compile("^_if_$"));
+        lexemes.put("ELSE", Pattern.compile("^ELSE$"));
+        lexemes.put("WHILE", Pattern.compile("^WHILE$"));
+        lexemes.put("DO", Pattern.compile("^DO$"));
+        lexemes.put("_for_", Pattern.compile("^FOR$"));
         lexemes.put("DIV", Pattern.compile("^,$"));
         lexemes.put("PRINT", Pattern.compile("^PRINT$"));
     }

@@ -18,10 +18,10 @@ public class Interpreter {
             cur = infixExpr.get(iterator);
             switch (cur.type) {
                 case "ASSIGN_OP" -> interpret_value("ENDL");
-                case "IF" -> interpret_if();
+                case "_if_" -> interpret_if();
                 case "WHILE" -> interpret_while();
                 case "DO" -> interpret_do_while();
-                case "FOR" -> interpret_for();
+                case "_for_" -> interpret_for();
                 case "PRINT" -> interpret_print();
             }
         }
@@ -31,16 +31,20 @@ public class Interpreter {
     private void interpret_value(String trans) {
         int indexVar = iterator - 1;
         int startExpr = iterator + 1;
+
         while (!trans.equals(cur.type)) {
             if ("DIV".equals(cur.type)) {
                 double rez = calc(toPostfix(infixExpr, startExpr, iterator));
                 variables.put(infixExpr.get(indexVar).value, rez);
+                //System.out.println("infixExpr.get(indexVar).value: "+infixExpr.get(indexVar).value); ///////////////////
                 indexVar = iterator + 1;
                 startExpr = iterator + 3;
             }
             iterator++;
+            //System.out.println("iterator: "+iterator);                                               ///////////////////
             cur = infixExpr.get(iterator);
         }
+
         double rez = calc(toPostfix(infixExpr, startExpr, iterator));
         variables.put(infixExpr.get(indexVar).value, rez);
     }
@@ -194,48 +198,46 @@ public class Interpreter {
     }
 
     private ArrayList<Token> toPostfix(ArrayList<Token> infixExpr, int start, int end) {
-        ArrayList<Token> postfixExpr = new ArrayList<>(); // Выходная строка, содержащая постфиксную запись
-        Stack<Token> stack = new Stack<>(); // Инициализация стека, содержащий операторы в виде символов
-        //	Перебираем строку
+        ArrayList<Token> postfixExpr = new ArrayList<>();
+        Stack<Token> stack = new Stack<>();
         for (int i = start; i < end; i++) {
-            Token c = infixExpr.get(i); // Текущий токен
+            Token c = infixExpr.get(i);
             switch (c.type) {
-                case "DIGIT", "VAR" -> postfixExpr.add(c); // Если токен - цифра
-                case "L_BC" -> stack.push(c); // Если открывающаяся скобка заносим её в стек
-                case "R_BC" -> { //	Если закрывающая скобка
-                    //	Заносим в выходную строку из стека всё вплоть до открывающей скобки
+                case "DIGIT", "VAR" -> postfixExpr.add(c);
+                case "L_BC" -> stack.push(c);
+                case "R_BC" -> {
                     while (stack.size() > 0 && !"L_BC".equals(stack.peek().type))
                         postfixExpr.add(stack.pop());
-                    stack.pop(); //	Удаляем открывающуюся скобку из стека
+                    stack.pop();
                 }
-                case "OP" -> {  //	Проверяем, содержится ли символ в списке операторов
+                case "OP" -> {
                     Token op = c;
                     while (stack.size() > 0 && (operationPriority(stack.peek()) >= operationPriority(op))) {
                         postfixExpr.add(stack.pop());
-                    } // Заносим в выходную строку все операторы из стека, имеющие более высокий приоритет
-                    stack.push(c); // Заносим в стек оператор
+                    }
+                    stack.push(c);
                 }
             }
         }
 
         while (!stack.isEmpty()) {
             postfixExpr.add(stack.pop());
-        } // Заносим все оставшиеся операторы из стека в выходную строку
+        }
 
         return postfixExpr;
     }
 
     private double calc(ArrayList<Token> postfixExpr) {
-        Stack<Double> locals = new Stack<>(); // Стек для хранения чисел
+        Stack<Double> locals = new Stack<>();
         for (int i = 0; i < postfixExpr.size(); i++) {
             Token c = postfixExpr.get(i);
-            switch (c.type) { // Если символ число
+            switch (c.type) {
                 case "DIGIT" -> locals.push(Double.parseDouble(c.value));
                 case "VAR" -> locals.push(variables.get(c.value));
-                case "OP" -> { // Получаем значения из стека в обратном порядке
+                case "OP" -> {
                     double second = locals.size() > 0 ? locals.pop() : 0,
                             first = locals.size() > 0 ? locals.pop() : 0;
-                    locals.push(execute(c, first, second)); // Получаем результат операции и заносим в стек
+                    locals.push(execute(c, first, second));
                 }
             }
         }
