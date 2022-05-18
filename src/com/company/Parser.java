@@ -28,7 +28,8 @@ public class Parser {
     public void lang() throws ParserExc {
         for (int i = 0; i < len; i++) {
             curLine++;
-            expr();
+            body();
+            terminalCheck("ENDL");
         }
     }
     public void expr() {
@@ -40,8 +41,6 @@ public class Parser {
         switch (curToken.type) {
             case "VAR" -> expr_assign();
             case "_if_" -> if_op();
-            case "WHILE" -> while_op();
-            case "DO" -> do_while_op();
             case "_for_" -> for_op();
             case "PRINT" -> print();
             default -> terminalCheck("VAR");
@@ -63,14 +62,7 @@ public class Parser {
 
     public boolean body_condition() {
         return switch (curToken.type) {
-            case "VAR", "_if_", "_for_", "WHILE", "DO", "PRINT" -> true;
-            default -> false;
-        };
-    }
-
-    public boolean body_condition_do_while() {
-        return switch (curToken.type) {
-            case "VAR", "_if_", "_for_", "DO", "PRINT" -> true;
+            case "VAR", "_if_", "_for_", "PRINT" -> true;
             default -> false;
         };
     }
@@ -129,23 +121,6 @@ public class Parser {
         do {
             expr();
         } while (body_condition());
-    }
-
-    public void while_op() {
-        terminalCheck("WHILE");
-        condition_in_br();
-        do {
-            body();
-        } while (body_condition());
-    }
-
-    public void do_while_op() {
-        terminalCheck("DO");
-        do {
-            body();
-        } while (body_condition_do_while());
-        terminalCheck("WHILE");
-        condition_in_br();
     }
 
     public void for_op() {

@@ -19,8 +19,6 @@ public class Interpreter {
             switch (cur.type) {
                 case "ASSIGN_OP" -> interpret_value("ENDL");
                 case "_if_" -> interpret_if();
-                case "WHILE" -> interpret_while();
-                case "DO" -> interpret_do_while();
                 case "_for_" -> interpret_for();
                 case "PRINT" -> interpret_print();
             }
@@ -114,39 +112,6 @@ public class Interpreter {
         cur = infixExpr.get(iterator);
 
         transCondition = compare(infixExpr.get(comparison_op_index), first, second);
-    }
-
-    private void interpret_while() {
-        int start_iteration = iterator;
-        interpret_condition();
-        while (transCondition) {
-            iterator++;
-            interpret_value("ENDL");
-            iterator = start_iteration;
-            cur = infixExpr.get(iterator);
-            interpret_condition();
-        }
-        while (!"ENDL".equals(cur.type)) {
-            iterator++;
-            cur = infixExpr.get(iterator);
-        }
-    }
-
-    private void interpret_do_while() {
-        iterator += 2;
-        cur = infixExpr.get(iterator);
-        int start_iteration = iterator;
-        do {
-            interpret_value("WHILE");
-            interpret_condition();
-            iterator = start_iteration;
-            cur = infixExpr.get(iterator);
-        } while (transCondition);
-
-        while (!"ENDL".equals(cur.type)) {
-            iterator++;
-            cur = infixExpr.get(iterator);
-        }
     }
 
     private void interpret_for() {
