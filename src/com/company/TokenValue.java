@@ -14,10 +14,10 @@ public class TokenValue {
         lexemes.put("ENDL", Pattern.compile("^;$"));
         lexemes.put("COMPARE_OP", Pattern.compile("^(~|<|>|!=)$"));
         lexemes.put("_if_", Pattern.compile("^_if_$"));
-        lexemes.put("ELSE", Pattern.compile("^ELSE$"));
-        lexemes.put("WHILE", Pattern.compile("^WHILE$"));
-        lexemes.put("DO", Pattern.compile("^DO$"));
-        lexemes.put("_for_", Pattern.compile("^FOR$"));
+        lexemes.put("_else_", Pattern.compile("^_else_$"));
+        lexemes.put("_while_", Pattern.compile("^_while_$"));
+        lexemes.put("_do_", Pattern.compile("^_do_$"));
+        lexemes.put("_for_", Pattern.compile("^_for_$"));
         lexemes.put("DIV", Pattern.compile("^,$"));
         lexemes.put("PRINT", Pattern.compile("^PRINT$"));
     }

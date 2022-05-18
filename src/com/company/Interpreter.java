@@ -33,7 +33,7 @@ public class Interpreter {
         int startExpr = iterator + 1;
 
         while (!trans.equals(cur.type)) {
-            if ("DIV".equals(cur.type)) {
+            if ("ENDL".equals(cur.type)) {
                 double rez = calc(toPostfix(infixExpr, startExpr, iterator));
                 variables.put(infixExpr.get(indexVar).value, rez);
                 //System.out.println("infixExpr.get(indexVar).value: "+infixExpr.get(indexVar).value); ///////////////////
